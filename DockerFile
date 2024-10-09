@@ -9,6 +9,7 @@ COPY . /app
 
 # 安装项目依赖
 RUN pip install --no-cache-dir fastapi uvicorn
+RUN pip install --no-cache-dir jinja2
 
 # 如果您有requirements.txt文件,请使用下面这行替换上面的RUN命令
 # RUN pip install --no-cache-dir -r requirements.txt

@@ -1,4 +1,3 @@
-import api.t1 as t1
 import config.swagger as swagger
 from webUI import templateCfg
 
@@ -28,3 +27,7 @@ if __name__ == "__main__":
     # 启动FastAPI服务
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
+
+
+
+# uvicorn main:app --reload 
