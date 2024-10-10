@@ -7,9 +7,9 @@ WORKDIR /app
 # 将当前目录内容复制到容器中的/app
 COPY . /app
 
-# 安装项目依赖
-RUN pip install --no-cache-dir fastapi uvicorn
-RUN pip install --no-cache-dir jinja2
+# 安装项目依赖(指定清华镜像源)
+RUN pip install --no-cache-dir -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+RUN pip install --no-cache-dir jinja2 -i https://pypi.tuna.tsinghua.edu.cn/simple
 
 # 如果您有requirements.txt文件,请使用下面这行替换上面的RUN命令
 # RUN pip install --no-cache-dir -r requirements.txt

@@ -1,6 +1,6 @@
 from typing import Any
 from fastapi.responses import JSONResponse
-from openai import BaseModel
+from pydantic import BaseModel
 
 class AmisRet(BaseModel):
     status: int

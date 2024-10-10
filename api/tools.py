@@ -53,7 +53,7 @@ amis_json = {
 }
 
     
-@router.get("/tools", response_class=HTMLResponse,description="f1页面")
+@router.get("/tools", response_class=HTMLResponse,description="工具集")
 async def read_index():
     return templateCfg.render(amis_json)
     

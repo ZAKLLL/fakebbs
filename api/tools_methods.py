@@ -46,6 +46,7 @@ def translate_sql(sql_input):
 
 ToolMethods=[
     ToolMethod("md5","md5转换",lambda x: x+"md5"),
-    ToolMethod("MpDebug","mybatisDebug",translate_sql)
+    ToolMethod("MpDebug","mybatisDebug",translate_sql),
+    ToolMethod("大写","大写",lambda x: x.upper())
 ]
 __all__ = ['ToolMethods']
