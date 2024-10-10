@@ -7,6 +7,14 @@ while true; do
     # 检查 git pull 是否有更新
     if git pull | grep -q 'Already up to date.'; then
         echo "No changes detected. Skipping restart."
+            # 检查应用是否正在运行
+        if ! pgrep -f "uvicorn main:app" > /dev/null; then
+            echo "Application is not running. Starting it now..."
+            nohup uvicorn main:app --host 0.0.0.0 --port 80 --reload >>log.log 2>&1 &
+            echo "Application started!"
+        else
+            echo "Application is already running."
+        fi
     else
         echo "Changes detected. Proceeding with restart."
         
@@ -23,6 +31,8 @@ while true; do
         nohup uvicorn main:app --host 0.0.0.0 --port 80 --reload  >>log.log 2>&1 &
         echo "Reload complete!"
     fi
+
+
 
     # 等待2分钟
     sleep 120
