@@ -41,8 +41,15 @@ def translate_sql(sql_input):
             sql = sql.replace("?", f"'{t[:-len('(LocalDateTime)')]}'", 1)
         
         i += 1
+    # SQL 格式化
+    import sqlparse
     
-    return sql
+    # 格式化 SQL
+    formatted_sql = sqlparse.format(sql, reindent=True, keyword_case='upper')
+    
+    # 如果需要，可以在这里添加更多的格式化逻辑
+    
+    return formatted_sql
 
 ToolMethods=[
     ToolMethod("md5","md5转换",lambda x: x+"md5"),
