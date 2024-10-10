@@ -3,8 +3,6 @@
 
 while true; do
 
-    # 等待2分钟
-    sleep 120
     
     # 检查 git pull 是否有更新
     if git pull | grep -q 'Already up to date.'; then
@@ -26,4 +24,6 @@ while true; do
         echo "Reload complete!"
     fi
 
+    # 等待2分钟
+    sleep 120
 done
