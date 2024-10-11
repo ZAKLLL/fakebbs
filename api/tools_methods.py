@@ -30,7 +30,7 @@ def translate_sql(sql_input):
     # 替换 SQL 中的 ? 为 parms 中的参数
     i = 0
     while i < len(parms):
-        t = parms[i]
+        t = parms[i][1:]
         if t.endswith("(String)"):
             sql = sql.replace("?", f"'{t[:-len('(String)')]}'", 1)
         
