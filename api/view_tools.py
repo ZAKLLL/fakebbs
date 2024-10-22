@@ -43,6 +43,16 @@ amis_json = {
           "level": "primary"
       },
       {
+          "type": "button",
+          "label": "复制",
+          "actionType": "copy",
+          "target": "output_text",
+          "level": "primary",
+          "style": {
+              "marginLeft": "10px"  # 设置左边距以增加间隔
+          }
+      },
+      {
           "type": "textarea",
           "label": "输出文本",
           "name": "output_text",
