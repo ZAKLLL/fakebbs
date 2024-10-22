@@ -51,9 +51,42 @@ def translate_sql(sql_input):
     
     return formatted_sql
 
+
+
+def json2javabean(jsonInput):
+
+    def map_type(json_type):
+        print(json_type)
+        if json_type == str:
+            return "String"
+        elif json_type == int:
+            return "int"
+        elif json_type == float:
+            return "double"
+        elif json_type == bool:
+            return "boolean"
+        elif json_type == list:
+            return "List"
+        elif json_type == dict:
+            return "Map"
+        else:
+            return "Object"
+    import json
+    data = json.loads(jsonInput)
+    
+    java_class = f"import lombok.Data;\n\n@Data\npublic class FuckBean '{'{'}\n"
+    
+    for key, value in data.items():
+        java_class += f"    private {map_type(type(value))} {key};\n"
+    
+    java_class += "}"
+    
+    return java_class
+    
+
 ToolMethods=[
-    ToolMethod("md5","md5转换",lambda x: x+"md5"),
     ToolMethod("MpDebug","mybatisDebug",translate_sql),
-    ToolMethod("大写","大写",lambda x: x.upper())
+    ToolMethod("JSON2JAVABEAN","JSON转javaBean",json2javabean)
+
 ]
 __all__ = ['ToolMethods']
