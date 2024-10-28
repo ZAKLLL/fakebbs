@@ -80,3 +80,5 @@ webUI/build/
 
 # Custom
 _pycache_/
+
+venv/
