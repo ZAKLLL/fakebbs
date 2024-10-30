@@ -8,7 +8,8 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from api import tools_methods
 from base.amisRet import AmisRet
 from webUI import templateCfg
-
+from base.baseJson import base_amis_json
+from base.baseJson import generate_amis_json
 router = APIRouter()
 
 
@@ -64,8 +65,8 @@ for filename in os.listdir(api_dir):
         if filename=='index.py':
             continue
         
-        if hasattr(module, "router"):
-            apiList.append({"value":filename,"label":module.view_desc,"to":"/index/"+filename,"view_sort":module.view_sort})
+        # if hasattr(module, "router"):
+        apiList.append({"value":filename,"label":module.view_desc,"to":"/index/"+filename,"view_sort":module.view_sort})
 apiList.sort(key=lambda x:x["view_sort"])
 
 @router.get("/", response_class=HTMLResponse,description="")
@@ -90,7 +91,11 @@ async def read_index(filename):
     module_name = f"{api_dir}.{filename[:-3]}"
     module = importlib.import_module(module_name)
     viewJson=dict(base_index_amis_json)
-    viewJson['body']=module.amis_json
+    if not hasattr(module, "amis_json"):
+        viewJson['body']=generate_amis_json(module)
+    else: 
+        viewJson['body']=module.amis_json
+    
     return templateCfg.render(viewJson)
     
 

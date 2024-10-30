@@ -90,6 +90,7 @@ async def doProcess(request:Request):
     
     if not ms:
         return AmisRet.error("方法不存在")
-    print(ms[0].run(data["input_text"]))
-    return AmisRet.ok({"output_text":ms[0].run(data["input_text"])})
+    ret=ms[0].run(data["input_text"])
+    print(ret)  
+    return AmisRet.ok({"output_text":ret})
 
