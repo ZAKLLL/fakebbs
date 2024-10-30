@@ -8,8 +8,8 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from api import tools_methods
 from base.amisRet import AmisRet
 from webUI import templateCfg
-from base.baseJson import base_amis_json
-from base.baseJson import generate_amis_json
+from base.methodView import base_amis_json
+from base.methodView import generate_amis_json
 router = APIRouter()
 
 
@@ -44,7 +44,6 @@ base_index_amis_json = {
                   "msg": "${event.data.item.label}"
                 }
               }
-              
             ]
           }
        } 

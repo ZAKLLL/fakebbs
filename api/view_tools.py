@@ -34,7 +34,7 @@ amis_json = {
           "type": "textarea",
           "label": "输入文本",
           "name": "input_text",
-          "placeholder": "请输入要转换的文本"
+          "placeholder": "请输入参数"
       },
       {
           "type": "button",

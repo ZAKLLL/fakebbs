@@ -7,7 +7,7 @@ app.include_router(swagger.router)
 # 自动注册路由
 import importlib
 import os
-
+import base.methodView
 # 动态导入所有API路由
 api_dir = "api"
 for filename in os.listdir(api_dir):
@@ -17,7 +17,7 @@ for filename in os.listdir(api_dir):
         if hasattr(module, "router"):
             app.include_router(getattr(module, "router"))
 
-
+app.include_router(base.methodView.router)
 
 @app.get("/hello")
 async def read_root():

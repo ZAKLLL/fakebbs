@@ -1,7 +1,7 @@
 view_sort=10
-view_desc="demo3页面"
-def p_f(a:int,b):
-    return int(a)+int(b)
+view_desc="doFuck"
+def f(你,我):
+    return __h1(你,我)
 
-
-
+def __h1(a,b):
+    return a+b
