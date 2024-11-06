@@ -82,11 +82,60 @@ def json2javabean(jsonInput):
     java_class += "}"
     
     return java_class
-    
+def generate_ddl_from_java_bean(java_bean_code):
+    """
+    Generates MySQL DDL from a given Java Bean code.
+    """
+    import re
+    import textwrap
+
+    # Extract class name from Java Bean code
+    class_name_match = re.search(r"public class (\w+)", java_bean_code)
+    if class_name_match:
+        class_name = class_name_match.group(1)
+    else:
+        raise ValueError("Failed to extract class name from Java Bean code.")
+
+    # Convert camel case to underscore for table name
+    table_name = re.sub(r'(?<!^)(?=[A-Z])', '_', class_name).lower()
+
+    # Initialize DDL
+    ddl = f"CREATE TABLE IF NOT EXISTS {table_name} (\n    id BIGINT PRIMARY KEY AUTO_INCREMENT\n);\n\n"
+
+    # Extract fields and their comments from Java Bean code
+    # 使用正则表达式匹配注释和字段
+    field_pattern = r"/\*\*\s*\*\s*(.*?)\s*\*/\s*private\s+(\w+)\s+(\w+);"
+    fields = re.findall(field_pattern, java_bean_code, re.DOTALL)
+
+    # Generate ALTER TABLE statements for each field
+    for comment, field_type, field_name in fields:
+        # Clean up comment by removing * and extra spaces
+        comment = comment.strip().replace('*', '').strip()
+        if not comment:
+            comment = "123"  # 如果没有注释就使用默认值
+            
+        # Convert field name to underscore
+        field_name_underscore = re.sub(r'(?<!^)(?=[A-Z])', '_', field_name).lower()
+        
+        # Map Java types to MySQL types
+        if field_type in ["String"]:
+            mysql_type = "VARCHAR(64)"
+        elif field_type == "BigDecimal":
+            mysql_type = "DECIMAL(10, 4)"
+        else:
+            mysql_type = field_type.lower()
+            
+        # Add ALTER TABLE statement
+        ddl += f"ALTER TABLE {table_name} ADD COLUMN {field_name_underscore} {mysql_type} NULL COMMENT '{comment}';\n"
+
+    return textwrap.dedent(ddl)
+
+
 
 ToolMethods=[
     ToolMethod("MpDebug","mybatisDebug",translate_sql),
-    ToolMethod("JSON2JAVABEAN","JSON转javaBean",json2javabean)
+    ToolMethod("JSON2JAVABEAN","JSON转javaBean",json2javabean),
+    ToolMethod("JAVABEAN TO DDL","java Bean 转 DDL",generate_ddl_from_java_bean),
 
 ]
 __all__ = ['ToolMethods']
