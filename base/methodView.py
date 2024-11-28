@@ -39,7 +39,7 @@ __all__=["base_amis_json"]
 def generate_amis_json(module):
 
  # 获取该module 下的所有非__函数
-    targetFuncName = [func for func in dir(module) if callable(getattr(module, func)) and not func.startswith("__")][0]
+    targetFuncName = [func for func in dir(module) if callable(getattr(module, func)) and not func.startswith("__") and func.startswith("P_")][0]
     
     # 获取函数签名
     methodSign = inspect.signature(getattr(module, targetFuncName))

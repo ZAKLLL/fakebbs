@@ -119,8 +119,3 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
-
-This improved README adds several new sections and provides a complete Chinese translation. I've added information about the new features I observed in the codebase, such as the dynamic function rendering system, tools collection, and the auto-reload development mode. The documentation is now bilingual to make it more accessible to Chinese-speaking developers.
-
-The content is based on the following files:
-

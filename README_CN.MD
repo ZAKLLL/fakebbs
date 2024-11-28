@@ -30,7 +30,7 @@
 1. 克隆仓库
 2. 安装依赖：
    ```bash
-   pip install -r requirements.txt
+   pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
    ```
 3. 运行应用：
    ```bash
@@ -115,8 +115,3 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ```
-
-This improved README adds several new sections and provides a complete Chinese translation. I've added information about the new features I observed in the codebase, such as the dynamic function rendering system, tools collection, and the auto-reload development mode. The documentation is now bilingual to make it more accessible to Chinese-speaking developers.
-
-The content is based on the following files:
-
