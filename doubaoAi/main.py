@@ -18,8 +18,10 @@ def initWorkSpace(source_file_path):
 
     shutil.copy(source_file_path, task_path)  # 直接复制到task_path
     return task_path
-def md2Word(source_file_path):
-    task_path=initWorkSpace(source_file_path)
+
+
+def md2Word(source_file_path,task_path):
+    # task_path=initWorkSpace(source_file_path)
     
     # 替换source_file_path为task_path下的文件路径
     source_file_path = os.path.join(task_path, os.path.basename(source_file_path))

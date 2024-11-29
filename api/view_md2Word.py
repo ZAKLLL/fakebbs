@@ -4,6 +4,7 @@ from fastapi import APIRouter, Request, UploadFile, File
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse
 from doubaoAi import main  # 导入 doubaoAi 包中的 main 函数
 from base.amisRet  import AmisRet
+from fastapi import FastAPI, BackgroundTasks
 
 router = APIRouter()
 
@@ -84,6 +85,28 @@ async def demo(request: Request, file: UploadFile = File(...)):
     os.remove(temp_file_path)
     return AmisRet.ok({"output_text":ret})
 
+def write_markdown_file(temp_file_path, markdown_content):
+    with open(temp_file_path, 'w', encoding='utf-8') as file:
+        file.write(markdown_content)
+
+@router.post("/md2word/string")
+async def demo_string(request: Request, background_tasks: BackgroundTasks):
+    body = await request.json()
+    markdown_content = body["mdData"]
+    fileName = body["fileName"]
+    print("---------->",body)
+    temp_file_path = os.path.join("./temp", fileName + ".md")
+    os.makedirs(os.path.dirname(temp_file_path), exist_ok=True)
+    write_markdown_file(temp_file_path, markdown_content)
+
+    
+    absolute_temp_file_path = os.path.abspath(temp_file_path)
+    task_path= main.initWorkSpace(absolute_temp_file_path)
+    background_tasks.add_task(main.md2Word, absolute_temp_file_path,task_path)
+
+    ret = "http://139.9.223.239/md2word/download?filePath="+task_path.split("workspace")[1].replace("\\", "/")+"/documents/"+fileName+"-word.docx"
+    return AmisRet.ok({"downloadLink": ret})
+
 @router.get("/md2word/download")
 async def download_file(filePath: str):
     filePath="./workspace"+filePath
@@ -94,4 +117,5 @@ async def download_file(filePath: str):
     # 下载的文件名试用文件全名
     fileName=os.path.basename(filePath)
     return FileResponse(filePath,filename=fileName)  # 返回文件以供下载
+
 

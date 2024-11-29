@@ -100,6 +100,8 @@ def convert_md_to_word(input_file, task_path, chunk_size=5000):
         final_path = os.path.join(task_path, "documents", f"{input_name}.docx")
         # merge_word_documents(word_files, final_path)
         output = pypandoc.convert_file(input_file, 'docx', outputfile=final_path)
+        print(f'生成文件成功：{final_path}')
+
         return final_path
     except Exception as e:
         print(f"Error converting file: {str(e)}")
