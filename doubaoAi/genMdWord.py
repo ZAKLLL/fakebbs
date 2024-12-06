@@ -95,11 +95,30 @@ def convert_md_to_word(input_file, task_path, chunk_size=5000):
                     line = line.replace(line.split('(')[1].split(')')[0], img_path)  # 替换图片路径
                 print(line, end='')
 
+        # 定义调整表格宽度的函数
+        def adjust_table_width(docx_file):
+            doc = Document(docx_file)
+
+            for table in doc.tables:
+                total_width = 0
+                for cell in table.rows[0].cells:
+                    if cell.width is not None:
+                        total_width += cell.width
+
+                for row in table.rows:
+                    for cell in row.cells:
+                        if cell.width is not None:
+                            cell.width = total_width / len(row.cells)
+
+            doc.save(docx_file)
+            
         # # Merge all Word documents
         input_name = os.path.basename(input_file).split('.')[0]
         final_path = os.path.join(task_path, "documents", f"{input_name}.docx")
         # merge_word_documents(word_files, final_path)
         output = pypandoc.convert_file(input_file, 'docx', outputfile=final_path)
+        adjust_table_width(final_path)
+
         print(f'生成文件成功：{final_path}')
 
         return final_path

@@ -76,7 +76,10 @@ async def demo(request: Request, file: UploadFile = File(...)):
 
     # 获取绝对路径
     absolute_temp_file_path = os.path.abspath(temp_file_path)
-    retFile = doubaoAi.main.md2Word(absolute_temp_file_path)  # 使用绝对路径
+
+    task_path= main.initWorkSpace(absolute_temp_file_path)
+    retFile = doubaoAi.main.md2Word(absolute_temp_file_path,task_path)  # 使用绝对路径
+    print("fffffffffffffffff",retFile)
     relative_retFile = os.path.relpath(retFile) 
     print(relative_retFile)
     # workspace\2024063桥梁健康监测系统项目-概要设计_20241128_145338\documents\2024063桥梁健康监测系统项目-概要设计-word_combined.docx
@@ -112,7 +115,7 @@ async def download_file(filePath: str):
     filePath="./workspace"+filePath
     # 检查文件是否存在
     if not os.path.exists(filePath):
-        return JSONResponse(status_code=404, content={"message": "File not found."})
+        return JSONResponse(status_code=201, content={"message": "文件正在生成中，请稍后再试!"})
 
     # 下载的文件名试用文件全名
     fileName=os.path.basename(filePath)

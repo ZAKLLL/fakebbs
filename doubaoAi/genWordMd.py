@@ -61,8 +61,10 @@ class MermaidConverter:
 
             mmcodes=self.generate_mermaid_html(mermaid_matches)    
 
-            # 生成图片
-            genMermaidPic.render_mermaid(mmcodes,self.task_path)
+
+            if mermaid_matches:
+                # 生成图片
+                genMermaidPic.render_mermaid(mmcodes,self.task_path)
 
             # 替换Mermaid代码为图片引用
             with open(self.target_file, 'r', encoding='utf-8') as file:
